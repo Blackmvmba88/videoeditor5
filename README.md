@@ -1,6 +1,24 @@
 # BlackMamba Video Editor
 
-Editor de video minimo, rapido y no destructivo para cortar clips sin cargar un editor gigante.
+Editor de video mínimo, rápido y no destructivo para cortar clips sin cargar un editor gigante.
+
+## Enfoque
+
+**WebUI-first**: el editor corre primero en el navegador local con Vite. Tauri/Rust queda como wrapper de escritorio opcional para integrar FFmpeg, filesystem nativo y builds instalables.
+
+```text
+Browser WebUI (localhost)
+        |
+        v
+Playback + Timeline + IN/OUT
+        |
+        v
+Edit Decision List (EDL)
+        |
+        +--> Web preview
+        |
+        `--> Tauri/Rust bridge --> FFmpeg --> Video final
+```
 
 ## Objetivo V0
 
@@ -11,38 +29,30 @@ Abrir un video, reproducirlo, marcar IN/OUT, crear cortes y exportar el resultad
 - El archivo original nunca se modifica.
 - La timeline es la fuente de verdad.
 - Los cortes son instrucciones, no cambios destructivos.
-- Exportacion con FFmpeg.
+- La UI debe funcionar en navegador local sin depender de Tauri.
+- Exportación con FFmpeg cuando corre con backend local/Tauri.
 - Copia de streams cuando sea posible para evitar recomprimir.
-- Estado de sesion serializable para autosave y recuperacion.
+- Estado de sesión serializable para autosave y recuperación.
 
-## Flujo
+## Ejecutar WebUI
 
-```text
-Video fuente
-    |
-    v
-Preview / Playback
-    |
-    v
-Timeline
-  |- Playhead
-  |- IN / OUT
-  |- Cuts
-  `- Segments
-    |
-    v
-Export plan
-    |
-    v
-FFmpeg
-    |
-    v
-Video final
+```bash
+npm install
+npm run dev
+```
+
+Abrir la URL que imprime Vite, normalmente `http://localhost:5173`.
+
+## Ejecutar como app de escritorio
+
+```bash
+npm install
+npm run tauri dev
 ```
 
 ## Atajos iniciales
 
-| Tecla | Accion |
+| Tecla | Acción |
 |---|---|
 | Space | Play / Pause |
 | I | Marcar IN |
@@ -52,7 +62,7 @@ Video final
 | Cmd/Ctrl + Z | Undo |
 | Cmd/Ctrl + Shift + Z | Redo |
 
-## Modelo de sesion
+## Modelo de sesión
 
 ```json
 {
@@ -68,12 +78,13 @@ Video final
 ## Roadmap
 
 ### V0
-- [ ] Abrir MP4/MOV
-- [ ] Preview
-- [ ] Timeline basica
-- [ ] Playhead
-- [ ] IN / OUT
-- [ ] Cortes
+- [x] WebUI local
+- [x] Abrir video desde navegador
+- [x] Preview
+- [x] Timeline básica
+- [x] Playhead
+- [x] IN / OUT
+- [ ] Cortes múltiples
 - [ ] Undo / Redo
 - [ ] Export FFmpeg
 
@@ -82,14 +93,14 @@ Video final
 - [ ] Waveform de audio
 - [ ] Zoom de timeline
 - [ ] Autosave
-- [ ] Recuperacion de sesion
+- [ ] Recuperación de sesión
 
 ### Futuro
 - [ ] Snap a beats
-- [ ] Integracion BlackMamba Deck
-- [ ] Deteccion de silencios
+- [ ] Integración BlackMamba Deck
+- [ ] Detección de silencios
 - [ ] Marcadores y cues
-- [ ] Automatizacion desde Grimorio
+- [ ] Automatización desde Grimorio
 
 ## Regla central
 
