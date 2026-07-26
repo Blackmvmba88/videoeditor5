@@ -27,7 +27,10 @@
       <section class="controls">
         <button id="markIn">I · Marcar IN</button>
         <button id="markOut">O · Marcar OUT</button>
-        <button id="clearMarks">Limpiar</button>
+        <button id="addSegment">⌘/Ctrl+K · Añadir segmento</button>
+        <button id="undo">Deshacer</button>
+        <button id="redo">Rehacer</button>
+        <button id="clearMarks">Limpiar marcas</button>
         <div class="readout">
           <span>IN <strong id="inValue">—</strong></span>
           <span>OUT <strong id="outValue">—</strong></span>
@@ -41,13 +44,26 @@
           <span id="timeValue">00:00.000 / 00:00.000</span>
         </div>
         <div id="timeline" class="timeline">
+          <div id="segmentsLayer" class="segments-layer"></div>
           <div id="selection" class="selection"></div>
           <div id="playhead" class="playhead"></div>
         </div>
         <input id="scrubber" type="range" min="0" max="1000" value="0" />
       </section>
 
-      <footer class="hint">Space: play/pause · I: IN · O: OUT</footer>
+      <section class="segments-card">
+        <div class="segments-header">
+          <div>
+            <div class="eyebrow">EDIT DECISION LIST</div>
+            <h2>Segmentos</h2>
+          </div>
+          <button id="exportPlan">Exportar plan JSON</button>
+        </div>
+        <div id="segmentsEmpty" class="segments-empty">Marca IN/OUT y añade tu primer segmento.</div>
+        <div id="segmentsList" class="segments-list"></div>
+      </section>
+
+      <footer class="hint">Space: play/pause · I: IN · O: OUT · Cmd/Ctrl+K: añadir · Delete: borrar · Cmd/Ctrl+Z: undo</footer>
     </main>
     <script type="module" src="/src/main.js"></script>
   </body>
