@@ -4,37 +4,49 @@
   background: #080808;
   color-scheme: dark;
 }
-
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at top, #181818, #080808 55%); }
 button, input { font: inherit; }
 button { cursor: pointer; }
-
+button:disabled { cursor: not-allowed; opacity: .38; }
 .app-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 40px; }
 .topbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 20px; }
 .eyebrow { font-size: 12px; letter-spacing: .22em; opacity: .55; }
 h1 { margin: 4px 0 0; font-size: clamp(26px, 4vw, 44px); }
+h2 { margin: 4px 0 0; font-size: 22px; }
 .open-button, button { border: 1px solid #383838; background: #151515; color: #fff; padding: 11px 16px; border-radius: 10px; }
-.open-button:hover, button:hover { background: #202020; }
-
+.open-button:hover, button:hover:not(:disabled) { background: #202020; }
 .stage { position: relative; overflow: hidden; border: 1px solid #242424; border-radius: 16px; background: #000; aspect-ratio: 16 / 9; display: grid; place-items: center; }
 video { width: 100%; height: 100%; object-fit: contain; background: #000; }
 .empty-state { position: absolute; inset: 0; display: grid; place-items: center; color: #777; pointer-events: none; }
 .empty-state[hidden] { display: none; }
-
 .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 16px 0; }
 .readout { margin-left: auto; display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: #888; }
 .readout strong { color: #fff; font-variant-numeric: tabular-nums; }
-
-.timeline-card { border: 1px solid #242424; background: #101010; border-radius: 14px; padding: 14px; }
-.timeline-labels { display: flex; justify-content: space-between; margin-bottom: 10px; color: #9a9a9a; font-size: 13px; font-variant-numeric: tabular-nums; }
+.timeline-card, .segments-card { border: 1px solid #242424; background: #101010; border-radius: 14px; padding: 14px; }
+.timeline-labels, .segments-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.timeline-labels { margin-bottom: 10px; color: #9a9a9a; font-size: 13px; font-variant-numeric: tabular-nums; }
 .timeline { position: relative; height: 72px; border-radius: 8px; overflow: hidden; background: repeating-linear-gradient(90deg, #171717 0 1px, transparent 1px 10%), linear-gradient(#111, #0d0d0d); border: 1px solid #222; }
+.segments-layer { position: absolute; inset: 0; }
+.segment-marker { position: absolute; top: 8px; bottom: 8px; min-width: 3px; padding: 0; border-radius: 5px; border: 1px solid #555; background: rgba(255,255,255,.14); }
+.segment-marker.selected { background: rgba(255,255,255,.28); border-color: #fff; }
 .selection { position: absolute; top: 0; bottom: 0; background: rgba(255, 255, 255, .12); border-left: 1px solid #ddd; border-right: 1px solid #ddd; pointer-events: none; }
-.playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.35); pointer-events: none; }
+.playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.35); pointer-events: none; z-index: 4; }
 #scrubber { width: 100%; margin: 10px 0 0; accent-color: white; }
+.segments-card { margin-top: 14px; }
+.segments-header { margin-bottom: 12px; }
+.segments-empty { padding: 22px 10px; text-align: center; color: #666; }
+.segments-empty[hidden] { display: none; }
+.segments-list { display: grid; gap: 8px; }
+.segment-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; border-radius: 10px; }
+.segment-row.selected { outline: 1px solid #4b4b4b; }
+.segment-main { width: 100%; display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; text-align: left; font-variant-numeric: tabular-nums; }
+.segment-main span:last-child { color: #888; }
+.danger { min-width: 44px; font-size: 20px; color: #bbb; }
 .hint { text-align: center; color: #5f5f5f; padding-top: 18px; font-size: 12px; }
-
 @media (max-width: 680px) {
-  .topbar { align-items: flex-start; }
+  .topbar, .segments-header { align-items: flex-start; }
   .readout { margin-left: 0; width: 100%; }
+  .segment-main { grid-template-columns: 44px 1fr; }
+  .segment-main span:last-child { grid-column: 2; }
 }
